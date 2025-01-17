@@ -1,6 +1,6 @@
 # PocketBase Schema Generator
 
-`@odama626/pocketbase-schema` is an open-source utility to generate TypeScript typings from [PocketBase](https://pocketbase.io/) schemas, enabling type-safe development with PocketBase APIs.
+`@sparkstone/pocketbase-schema` is an open-source utility to generate TypeScript typings from [PocketBase](https://pocketbase.io/) schemas, enabling type-safe development with PocketBase APIs.
 
 ## Features
 
@@ -14,19 +14,19 @@
 Install the package using npm:
 
 ```bash
-npm install @odama626/pocketbase-schema --save-dev
+npm install @sparkstone/pocketbase-schema --save-dev
 ```
 
 Or with yarn:
 
 ```bash
-yarn add @odama626/pocketbase-schema --dev
+yarn add @sparkstone/pocketbase-schema --dev
 ```
 
 Or with pnpm:
 
 ```bash
-pnpm add @odama626/pocketbase-schema --save-dev
+pnpm add @sparkstone/pocketbase-schema --save-dev
 ```
 
 ## Usage
@@ -99,4 +99,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ---
 
-For more details and updates, visit the [repository](https://github.com/odama626/pocketbase-schema).
+For more details and updates, visit the [repository](https://github.com/sparkstone/pocketbase-schema).

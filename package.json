@@ -1,5 +1,5 @@
 {
-  "name": "@odama626/pocketbase-schema",
+  "name": "@sparkstone/pocketbase-schema",
   "version": "0.1.0",
   "type": "module",
   "source": "src/main.ts",
