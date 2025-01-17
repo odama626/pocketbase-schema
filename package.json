@@ -1,0 +1,33 @@
+{
+  "name": "@odama626/pocketbase-schema",
+  "version": "0.1.0",
+  "type": "module",
+  "source": "src/main.ts",
+  "exports": {
+    "require": "./dist/main.cjs",
+    "default": "./dist/main.modern.js",
+    "main": "./dist/main.cjs",
+    "module": "./dist/main.module.js",
+    "unpkg": "./dist/main.umd.js"
+  },
+  "bin": {
+    "pocketbase-schema": "./dist/pocketbase-schema.esm.js"
+  },
+  "scripts": {
+    "build": "microbundle",
+    "dev": "microbundle watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cosmiconfig": "^9.0.0",
+    "json-to-ts": "^2.1.0",
+    "lodash-es": "^4.17.21",
+    "microbundle": "^0.15.1"
+  },
+  "microbundle": {
+    "target": "node"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7"
+  }
+}
