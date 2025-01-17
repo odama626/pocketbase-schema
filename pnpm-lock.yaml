@@ -20,6 +20,9 @@ importers:
       microbundle:
         specifier: ^0.15.1
         version: 0.15.1
+      pocketbase:
+        specifier: ^0.25.0
+        version: 0.25.0
     devDependencies:
       '@types/node':
         specifier: ^22.10.7
@@ -1577,6 +1580,9 @@ packages:
 
   pluralize@3.1.0:
     resolution: {integrity: sha512-2wcybwjwXOzGI1rlxWtlcs0/nSYK0OzNPqsg35TKxJFQlGhFu3cZ1x7EHS4r4bubQlhzyF4YxxlJqQnIhkUQCw==}
+
+  pocketbase@0.25.0:
+    resolution: {integrity: sha512-xbjiQG/tnh2HsjZrTW7ZEJASvl4hmGAB5PQAmNRkRU8BmrPib7zwKyXdiYJl34QN7ADpqykZD2lAMdDtrrQbuw==}
 
   possible-typed-array-names@1.0.0:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}
@@ -4042,6 +4048,8 @@ snapshots:
       find-up: 4.1.0
 
   pluralize@3.1.0: {}
+
+  pocketbase@0.25.0: {}
 
   possible-typed-array-names@1.0.0: {}
 
