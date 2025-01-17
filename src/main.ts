@@ -17,6 +17,15 @@ if (!result) {
 
 const config = generateSchema(result.config);
 
+function getType(type: string) {
+  switch (type) {
+    case 'bool':
+      return true;
+    default:
+      return '';
+  }
+}
+
 async function main() {
   const pb = await new Pocketbase(config.url);
 
@@ -25,12 +34,15 @@ async function main() {
   const pageResults = await pb.collections.getFullList();
 
   const schema = pageResults.reduce((result, next) => {
-    const { name } = next;
-    result[name] = next;
+    const { name, fields } = next;
+    result[name] = fields.reduce((result, next) => {
+      result[next.name] = getType(next.type);
+      return result;
+    }, {});
     return result;
   }, {});
 
-  console.log(pageResults);
+  console.dir(pageResults, { depth: 3 });
 
   const types = JsonToTs(schema).map(type => `export ${type}`);
   types[0] = types[0].replace('RootObject', 'CollectionSchemas');
