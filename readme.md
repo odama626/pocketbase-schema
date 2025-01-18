@@ -52,9 +52,6 @@ export default {
   email: 'admin@example.com', // Admin email for authentication
   password: 'yourpassword', // Admin password for authentication
   url: 'http://127.0.0.1:8090', // URL of the PocketBase instance
-  schema: {
-    outputPath: 'src/lib/pb.schema.json', // Path to save schema JSON
-  },
   collections: {
     outputPath: 'src/lib/collections.json', // Path to save collections JSON
   },
@@ -72,7 +69,6 @@ export default {
 
 ### Optional Configuration Fields
 
-- `schema.outputPath`: Path to save the generated schema JSON.
 - `collections.outputPath`: Path to save the generated collections JSON.
 - `types.outputPath`: Path to save the generated TypeScript definitions.
 
