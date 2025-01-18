@@ -50,7 +50,7 @@ async function main() {
 
   await ensureDirExists(config.schema.outputPath);
   await fs.writeFile(config.schema.outputPath, JSON.stringify(pageResults, null, 2));
-  console.log(`generated schema at ${path.relative(cwd(), config.collections.outputPath)}`);
+  console.log(`generated schema at ${path.relative(cwd(), config.schema.outputPath)}`);
 
   await ensureDirExists(config.types.outputPath);
   await fs.writeFile(config.types.outputPath, types.join('\n\n'));
