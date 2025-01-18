@@ -48,11 +48,9 @@ async function main() {
   types[0] = types[0].replace('RootObject', 'CollectionSchemas');
   types.unshift('');
 
-  await ensureDirExists(config.collections.outputPath);
-  await fs.writeFile(config.collections.outputPath, JSON.stringify(pageResults, null, 2));
-  console.log(
-    `generated collections backup at ${path.relative(cwd(), config.collections.outputPath)}`
-  );
+  await ensureDirExists(config.schema.outputPath);
+  await fs.writeFile(config.schema.outputPath, JSON.stringify(pageResults, null, 2));
+  console.log(`generated schema at ${path.relative(cwd(), config.collections.outputPath)}`);
 
   await ensureDirExists(config.types.outputPath);
   await fs.writeFile(config.types.outputPath, types.join('\n\n'));
@@ -77,7 +75,7 @@ type DeepPartial<T> = {
 };
 
 export interface Config extends RequiredConfig {
-  collections: {
+  schema: {
     outputPath: string;
   };
   types: { outputPath: string };
@@ -93,8 +91,8 @@ export default function generateSchema(
 ) {
   const DEFAULT_BASE_PATH = 'src/lib';
   const defaultConfig = {
-    collections: {
-      outputPath: path.join(cwd(), path.join(DEFAULT_BASE_PATH, 'collections.json')),
+    schema: {
+      outputPath: path.join(cwd(), path.join(DEFAULT_BASE_PATH, 'pb.schema.json')),
     },
     types: {
       outputPath: path.join(cwd(), path.join(DEFAULT_BASE_PATH, 'pb.types.ts')),
