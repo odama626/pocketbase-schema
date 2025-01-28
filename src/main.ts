@@ -26,6 +26,15 @@ function getType(type: string) {
   }
 }
 
+function capitalize(text: string): string {
+  return text[0].toUpperCase() + text.slice(1);
+}
+
+function pascalCase(text: string): string {
+  if (typeof text !== 'string') return text;
+  return text.split('_').filter(Boolean).map(capitalize).join('');
+}
+
 async function main() {
   const pb = await new Pocketbase(config.url);
 
@@ -35,7 +44,8 @@ async function main() {
 
   const schema = pageResults.reduce((result, next) => {
     const { name, fields } = next;
-    result[name] = fields.reduce((result, next) => {
+
+    result[pascalCase(name)] = fields.reduce((result, next) => {
       result[next.name] = getType(next.type);
       return result;
     }, {});
