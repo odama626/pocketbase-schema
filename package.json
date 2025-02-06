@@ -15,21 +15,30 @@
   },
   "scripts": {
     "build": "microbundle",
-    "dev": "microbundle watch"
+    "dev": "microbundle watch",
+    "watch": "vitest --watch"
   },
   "license": "MIT",
   "dependencies": {
     "cosmiconfig": "^9.0.0",
-    "json-to-ts": "^2.1.0",
     "lodash-es": "^4.17.21",
     "microbundle": "^0.15.1",
-    "pocketbase": "^0.25.0"
+    "pocketbase": "^0.25.0",
+    "prettier": "^3.4.2"
+  },
+  "prettier": {
+    "jsxSingleQuote": true,
+    "bracketSameLine": true,
+    "singleQuote": true,
+    "arrowParens": "avoid",
+    "printWidth": 100
   },
   "microbundle": {
     "target": "node"
   },
   "devDependencies": {
-    "@types/node": "^22.10.7"
+    "@types/node": "^22.10.7",
+    "vitest": "^3.0.5"
   },
   "repository": {
     "type": "git",
