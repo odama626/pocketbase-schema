@@ -184,19 +184,25 @@ export function generateTypes(collections: Collection[]) {
     generateCollectionInterface(collection.id, api),
   );
 
-  const collectionsInterface = `export enum Collections {
+  const staticTypes = `export enum Collections {
   ${Array.from(map)
     .map(([_, entry]) => `${entry.interface.name} =  "${entry.collection.name}",`)
     .join('\n')}
-}\n`;
+}
 
-  let output = [collectionsInterface, ...collectionInterfaces, ...appendedTypes].join('\n\n');
+export interface CollectionRecord {
+  collectionId: string;
+  collectionName: string;
+}
+`;
+
+  let output = [staticTypes, ...collectionInterfaces, ...appendedTypes].join('\n\n');
   return format(output, { parser: 'typescript' });
 }
 
 export function generateCollectionInterface(id: string, api: API) {
   let collection = api.map.get(id);
-  let output = `export interface ${collection.interface.name} {
+  let output = `export interface ${collection.interface.name} extends CollectionRecord {
   ${collection.collection.fields.map(field => generateFieldType(field, { ...api, collection })).join('\n')}
 }`;
   return output;
@@ -211,28 +217,28 @@ export function generateFieldType(field: Field, api: FieldAPI) {
 
 const FIELD_TYPES: Record<FieldType, (field: unknown, api: FieldAPI) => string> = {
   text(field: TextField) {
-    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
+    return 'string';
   },
   number() {
     return 'number';
   },
   email(field: EmailField) {
-    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
+    return 'string';
   },
   autodate(field: AutodateField) {
     return 'string';
   },
   date(field: DateField) {
-    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
+    return 'string';
   },
   password(field: PasswordField) {
-    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
+    return 'string';
   },
   bool() {
     return 'boolean';
   },
   json(field: JSONField) {
-    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
+    return 'string';
   },
   relation(field: RelationField, api) {
     const referencedCollection = api.map.get((field as RelationField).collectionId);
