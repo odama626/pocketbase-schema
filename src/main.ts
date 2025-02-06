@@ -30,7 +30,7 @@ async function main() {
   console.log(`generated schema at ${path.relative(cwd(), config.schema.outputPath)}`);
 
   await ensureDirExists(config.types.outputPath);
-  await fs.writeFile(config.types.outputPath, types.join('\n\n'));
+  await fs.writeFile(config.types.outputPath, types);
   console.log(`added types for schema to ${path.relative(cwd(), config.types.outputPath)}`);
 }
 

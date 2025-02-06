@@ -1,8 +1,5 @@
 import { cosmiconfigSync } from 'cosmiconfig';
-import Pocketbase from 'pocketbase';
-import * as fs from 'node:fs/promises';
-import JsonToTs from 'json-to-ts';
-import { cwd, exit } from 'node:process';
+import { cwd } from 'node:process';
 import * as path from 'node:path';
 import { defaultsDeep } from 'lodash-es';
 

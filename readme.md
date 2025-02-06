@@ -5,6 +5,8 @@
 ## Features
 
 - Automatically generate TypeScript definitions from your PocketBase schema.
+- Outputs a `Collections` enum for easy, type-safe querying.
+- Generates enums for `select` field types.
 - Supports modular usage as a CLI tool or a Node.js module.
 - Compatible with modern JavaScript and TypeScript projects.
 - Local-first and flexible configuration using [cosmiconfig](https://github.com/davidtheclark/cosmiconfig).
@@ -72,6 +74,51 @@ export default {
 - `schema.outputPath`: Path to save the generated schema JSON.
 - `types.outputPath`: Path to save the generated TypeScript definitions.
 
+## Generated Types
+
+The generated TypeScript definitions now include:
+
+- A `Collections` enum that maps to your PocketBase collections for type-safe queries.
+- Enums for any `select` field types defined in your schema, ensuring strict typing for these fields.
+
+### Example Usage
+
+Here's how you can use the generated `Collections` enum and type-safe queries in your project:
+
+```typescript
+import PocketBase from 'pocketbase';
+import { Collections, YourCollection } from './path/to/pb.types';
+
+const pb = new PocketBase('http://127.0.0.1:8090');
+
+async function fetchData() {
+  const data = await pb.collection(Collections.YourCollection).getFullList<YourCollection>();
+  console.log(data);
+}
+
+fetchData();
+```
+
+Replace `YourCollection` with the actual collection name, the names are PascalCase.
+
+#### Expanding types
+
+The recommended way to expand types it to create an interface that extends the main type
+
+```typescript
+import { Comments, Posts, Reactions } from './path/to/pb.types';
+
+interface Post extends Posts {
+  expand: {
+    comments: Comments[];
+    reactions: Reactions[]
+  }
+}
+
+pb.collection(Collections.Posts).getFullList<Post>({ expand: 'comments,reactions'});
+
+````
+
 ## Development
 
 ### Scripts
@@ -91,8 +138,8 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 - [PocketBase](https://pocketbase.io/)
 - [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
-- [json-to-ts](https://github.com/MariusAlch/json-to-ts)
 
 ---
 
 For more details and updates, visit the [repository](https://github.com/sparkstone/pocketbase-schema).
+
