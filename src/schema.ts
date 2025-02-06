@@ -27,7 +27,7 @@ interface BaseField {
   id: string;
 }
 
-interface TextField {
+interface TextField extends BaseField {
   type: 'text';
   autogeneratePattern: string;
   max: number;
@@ -37,7 +37,7 @@ interface TextField {
   required: boolean;
 }
 
-interface NumberField {
+interface NumberField extends BaseField {
   type: 'number';
   max: number | null;
   min: number | null;
@@ -45,7 +45,7 @@ interface NumberField {
   required: boolean;
 }
 
-interface PasswordField {
+interface PasswordField extends BaseField {
   type: 'password';
   cost: number;
   max: number;
@@ -54,25 +54,25 @@ interface PasswordField {
   required: boolean;
 }
 
-interface BooleanField {
+interface BooleanField extends BaseField {
   type: 'bool';
   required: boolean;
 }
 
-interface AutodateField {
+interface AutodateField extends BaseField {
   type: 'autodate';
   onCreate: boolean;
   onUpdate: boolean;
 }
 
-interface EmailField {
+interface EmailField extends BaseField {
   type: 'email';
   exceptDomains: any;
   onlyDomains: any;
   required: boolean;
 }
 
-interface FileField {
+interface FileField extends BaseField {
   type: 'file';
   maxSelect: number;
   maxSize: number;
@@ -82,14 +82,14 @@ interface FileField {
   thumbs: any;
 }
 
-interface DateField {
+interface DateField extends BaseField {
   type: 'date';
   max: string;
   min: string;
   required: boolean;
 }
 
-interface RelationField {
+interface RelationField extends BaseField {
   type: 'relation';
   cascadeDelete: boolean;
   collectionId: string;
@@ -98,14 +98,14 @@ interface RelationField {
   required: boolean;
 }
 
-interface SelectField {
+interface SelectField extends BaseField {
   type: 'select';
   values: string[];
   maxSelect: number;
   required: boolean;
 }
 
-interface JSONField {
+interface JSONField extends BaseField {
   type: 'json';
   maxSize: number;
   required: boolean;
@@ -125,20 +125,18 @@ export enum FieldType {
   JSON = 'json',
 }
 
-type Field = BaseField &
-  (
-    | TextField
-    | NumberField
-    | PasswordField
-    | BooleanField
-    | AutodateField
-    | DateField
-    | EmailField
-    | FileField
-    | RelationField
-    | SelectField
-    | JSONField
-  );
+type Field =
+  | TextField
+  | NumberField
+  | PasswordField
+  | BooleanField
+  | AutodateField
+  | DateField
+  | EmailField
+  | FileField
+  | RelationField
+  | SelectField
+  | JSONField;
 
 interface CollectionInterface {
   name: string;
@@ -211,43 +209,44 @@ export function generateFieldType(field: Field, api: FieldAPI) {
   return `${name}: ${type};`;
 }
 
-const FIELD_TYPES: Record<FieldType, (field: Field, api: FieldAPI) => string> = {
-  text() {
-    return 'string';
+const FIELD_TYPES: Record<FieldType, (field: unknown, api: FieldAPI) => string> = {
+  text(field: TextField) {
+    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
   },
   number() {
     return 'number';
   },
-  email() {
+  email(field: EmailField) {
+    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
+  },
+  autodate(field: AutodateField) {
     return 'string';
   },
-  autodate() {
-    return 'string';
+  date(field: DateField) {
+    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
   },
-  date() {
-    return 'string';
-  },
-  password() {
-    return 'string';
+  password(field: PasswordField) {
+    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
   },
   bool() {
     return 'boolean';
   },
-  json() {
-    return 'string';
+  json(field: JSONField) {
+    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
   },
-  relation(field, api) {
+  relation(field: RelationField, api) {
     const referencedCollection = api.map.get((field as RelationField).collectionId);
-    return 'string'; //referencedCollection.interface.name;
+    return ['string', !field.required && ' | undefined'].filter(Boolean).join('');
   },
-  file() {
-    return 'string';
+  file(field: FileField) {
+    let optional = !field.required;
+    let multiple = field.maxSelect > 1;
+    return [`string`, multiple && '[]', optional && ' | undefined'].filter(Boolean).join('');
   },
-  select(field, api) {
-    let selectField = field as SelectField;
+  select(field: SelectField, api) {
     let enumName = api.collection.interface.name + pascalCase(field.name);
     api.appendTypeDefinition(
-      `enum ${enumName}  { ${selectField.values.map(value => `${pascalCase(value)} = "${value}"`).join(', ')} }`,
+      `export enum ${enumName}  { ${field.values.map(value => `${pascalCase(value)} = "${value}"`).join(', ')} }`,
     );
     return enumName;
   },
