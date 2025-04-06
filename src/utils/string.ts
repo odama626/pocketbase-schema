@@ -5,7 +5,7 @@ export function capitalize(text: string): string {
 export function pascalCase(text: string): string {
   if (typeof text !== 'string') return text;
   return text
-    .split(/[\-\_]/)
+    .split(/[\-\_\:]/)
     .filter(Boolean)
     .map(capitalize)
     .join('');

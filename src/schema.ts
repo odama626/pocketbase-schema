@@ -123,6 +123,7 @@ export enum FieldType {
   Relation = 'relation',
   Select = 'select',
   JSON = 'json',
+  EDITOR = 'editor',
 }
 
 type Field =
@@ -210,13 +211,16 @@ export function generateCollectionInterface(id: string, api: API) {
 
 export function generateFieldType(field: Field, api: FieldAPI) {
   let name = camelCase(field.name);
-  if (!FIELD_TYPES[field.type]) throw new Error(`${field.type} not found`);
+  if (!FIELD_TYPES[field.type]) throw new Error(`${field.type} field type not found`);
   let type = FIELD_TYPES[field.type](field, api);
   return `${name}: ${type};`;
 }
 
 const FIELD_TYPES: Record<FieldType, (field: unknown, api: FieldAPI) => string> = {
   text(field: TextField) {
+    return 'string';
+  },
+  editor(field: TextField) {
     return 'string';
   },
   number() {
@@ -238,7 +242,7 @@ const FIELD_TYPES: Record<FieldType, (field: unknown, api: FieldAPI) => string> 
     return 'boolean';
   },
   json(field: JSONField) {
-    return 'string';
+    return 'unknown';
   },
   relation(field: RelationField, api) {
     const referencedCollection = api.map.get((field as RelationField).collectionId);
