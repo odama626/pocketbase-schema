@@ -38,7 +38,7 @@ pnpm add @sparkstone/pocketbase-schema --save-dev
 You can use the tool directly from the command line to generate typings from a PocketBase instance:
 
 ```bash
-pocketbase-schema
+npx pocketbase-schema
 ```
 
 ### Configuration
