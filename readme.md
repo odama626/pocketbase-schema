@@ -143,3 +143,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 For more details and updates, visit the [repository](https://github.com/sparkstone/pocketbase-schema).
 
+built by https://sparkstonepdx.com
+
