@@ -23,8 +23,8 @@
     "cosmiconfig": "^9.0.0",
     "lodash-es": "^4.17.21",
     "microbundle": "^0.15.1",
-    "pocketbase": "^0.25.0",
-    "prettier": "^3.4.2"
+    "pocketbase": "^0.26.0",
+    "prettier": "^3.5.3"
   },
   "prettier": {
     "jsxSingleQuote": true,
@@ -37,8 +37,8 @@
     "target": "node"
   },
   "devDependencies": {
-    "@types/node": "^22.10.7",
-    "vitest": "^3.0.5"
+    "@types/node": "^22.15.29",
+    "vitest": "^3.2.1"
   },
   "repository": {
     "type": "git",

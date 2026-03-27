@@ -124,6 +124,7 @@ export enum FieldType {
   Select = 'select',
   JSON = 'json',
   EDITOR = 'editor',
+  URL = 'url',
 }
 
 type Field =
@@ -211,7 +212,12 @@ export function generateCollectionInterface(id: string, api: API) {
 
 export function generateFieldType(field: Field, api: FieldAPI) {
   let name = camelCase(field.name);
-  if (!FIELD_TYPES[field.type]) throw new Error(`${field.type} field type not found`);
+
+  if (!FIELD_TYPES[field.type]) {
+    console.warn(`Unknown field type "${field.type}", falling back to unknown`);
+    return `${name}: unknown;`;
+  }
+
   let type = FIELD_TYPES[field.type](field, api);
   return `${name}: ${type};`;
 }
@@ -259,5 +265,8 @@ const FIELD_TYPES: Record<FieldType, (field: unknown, api: FieldAPI) => string> 
       `export enum ${enumName}  { ${field.values.map(value => `${pascalCase(value)} = "${value}"`).join(', ')} }`,
     );
     return enumName;
+  },
+  url(field: BaseField) {
+    return 'string';
   },
 };
