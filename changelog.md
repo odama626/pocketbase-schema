@@ -1,3 +1,9 @@
+## 0.11.0
+Add url field
+
+## 0.10.0
+Add editor field
+
 ## 0.9.0
 CollectionRecord for collectionId and collectionName
 values should be string, not string | undefined since it will just provide an empty string
